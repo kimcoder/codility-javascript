@@ -1,26 +1,27 @@
+// you can write to stdout for debugging purposes, e.g.
+// console.log('this is a debug message');
+
 function solution(A) {
-    if (A.length == 1) {
-        return 0;
-    }
-    let nums = {};
-    let maxNum = 0;
-    
+    // write your code in JavaScript (Node.js 8.9.4)
+    let hash = {};
+    let maxNum = null;
     A.forEach(e => {
-        if (!nums[e]) {
-            nums[e] = 0;
+        if(!hash[e]) {
+            hash[e] = 0;
+        } 
+        hash[e] += 1;
+        if (hash[e] > A.length/2) {
+            maxNum = e;
         }
-        nums[e]++;
     });
     
-    if (Object.keys(nums).length == 1) {
-        return 0;
-    }
-    for(let k in nums) {
-        maxNum = Math.max(maxNum, nums[k]);
-        if (nums[k] == maxNum && maxNum > A.length/2) {
-            return A.indexOf(Number(k));
-        }
+    if (!maxNum) {
+        return -1;    
     }
     
-    return -1;
+    for (let i=0; i<A.length; i++) {
+        if (A[i] === maxNum) {
+            return i;
+        }
+    }
 }

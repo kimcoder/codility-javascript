@@ -1,38 +1,23 @@
-function solution(S) {
-    if (S.length === 0) {
-        return 1;
-    }
+// you can write to stdout for debugging purposes, e.g.
+// console.log('this is a debug message');
 
+function solution(S) {
+    // write your code in JavaScript (Node.js 8.9.4)
     const stack = [];
-    for(let i=0; i<S.length; i++) {
+    for (let i=0; i<S.length; i++) {
         const char = S.charAt(i);
-        if (char.search(/(\(|\{|\[)/) > -1) {
-            stack.push(char);
+        const last = stack[stack.length - 1];
+        
+        if (char === ")" && last === "(") {
+            stack.pop();
+        } else if (char === "]" && last === "[") {
+            stack.pop();
+        } else if (char === "}" && last === "{") {
+            stack.pop();
         } else {
-            if (stack.length === 0 ) {
-                return 0;
-            }
-            const opener = stack.pop();
-            if (opener == "(" && char != ")") {
-                return 0;
-            } else if (opener == "[" && char != "]") {
-                return 0;
-            } else if (opener == "{" && char != "}") {
-                return 0;
-            }
+            stack.push(char);
         }
     }
     
     return (stack.length === 0) ? 1 : 0;
 }
-console.log(solution("{[()()]}"));
-console.log(solution("{([[()()]}"));
-console.log(solution("()(()())((()())(()()))"));
-let S = ""
-for(let i=0; i<10000; i++){
-    S += "("
-}
-for(i=0; i<10000; i++){
-    S += ")"   
-}
-console.log(solution(S));

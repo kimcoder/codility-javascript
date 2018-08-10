@@ -1,26 +1,25 @@
+// you can write to stdout for debugging purposes, e.g.
+// console.log('this is a debug message');
+
 function solution(S) {
-    if (S.length === 0) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    if (S.length % 2 === 1) {
         return 0;
     }
-
-    const stack = [];
-    for(let i=0; i<S.length; i++) {
+    
+    let bracketOpen = 0;
+    let bracketClose = 0;
+    
+    for (let i=0; i<S.length; i++) {
         const char = S.charAt(i);
-        if(char == "(") {
-            stack.push(char);
+        if (char === "(") {
+            bracketOpen++;
         } else {
-            if (stack.length == 0) {
-                return 0;
-            } else {
-                stack.pop();
+            if (bracketOpen > bracketClose) {
+                bracketClose++;        
             }
         }
     }
-    return (stack.length === 0) ? 1 : 0;
+    
+    return (S.length === bracketOpen + bracketClose && bracketOpen === bracketClose) ? 1: 0; 
 }
-
-
-console.log(solution("()"))
-console.log(solution("(())"))
-console.log(solution("())"))
-console.log(solution("((((()()))))"))

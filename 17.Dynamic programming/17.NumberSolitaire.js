@@ -9,7 +9,7 @@ function solution(A) {
         for (let j=Math.max(0, i-6); j<i; j++) {
             dp[i] = Math.max(dp[i], A[i]+dp[j]);
             // console.log(`i:${i} j:${j} A[i]:${A[i]} dp[i]:${A[i]+dp[j]}`, dp);
-        }    
+        }
     }
     console.log(dp);
     

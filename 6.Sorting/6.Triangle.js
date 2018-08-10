@@ -1,33 +1,14 @@
+// you can write to stdout for debugging purposes, e.g.
+// console.log('this is a debug message');
+
 function solution(A) {
-    if (A.length < 3) {
-        return 0;    
+    // write your code in JavaScript (Node.js 8.9.4)
+    A.sort((a,b) => b-a);
+    for (let i=0; i<A.length-2; i++) {
+        if (A[i] < A[i+1] + A[i+2]) {
+            return 1;    
+        }    
     }
     
-    let P;
-    let Q;
-    let R;
-    let traiangle = [];
-    
-    const sortedA = A.slice().sort((a, b) => b - a);
-    console.log(A);
-    for(let i=1; i<sortedA.length-1; i++) {
-        if(sortedA[i-1] < sortedA[i] + sortedA[i+1]){
-            console.log(sortedA[i-1], sortedA[i], sortedA[i+1])
-            P = sortedA[i-1];
-            Q = sortedA[i];
-            R = sortedA[i+1];
-            traiangle.push(P);
-            traiangle.push(Q);
-            traiangle.push(R);
-            break;
-        }
-    }
-    traiangle.sort((a,b) => A.indexOf(a) - A.indexOf(b))
-    console.log(traiangle);
-    
-    if (traiangle && (traiangle[0] + traiangle[1] > traiangle[2])) {
-        return 1;
-    } else {
-        return 0;
-    }
+    return 0;
 }

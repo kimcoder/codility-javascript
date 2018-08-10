@@ -1,41 +1,40 @@
-const isLeaderArray = (ar, leader) => {
-    let count = (ar.toString().match(new RegExp(leader, "g")) || []).length; 
-    return (count > ar.length/2);
-}
+// you can write to stdout for debugging purposes, e.g.
+// console.log('this is a debug message');
 
 function solution(A) {
     // write your code in JavaScript (Node.js 8.9.4)
-    let leaders = {};
-    let leaderNum = -1;
+    let hash = {};
+    let leaderNum = undefined;
+    let leaderNumTotal = 0;
+    let leaderNumCount = 0;
     let equiLeaders = 0;
     
-    // console.log(A);
-    for(let i=0; i<A.length; i++) {
-        if (!leaders[A[i]]){
-            leaders[A[i]] = 1;    
-        } else {
-            leaders[A[i]] ++;   
-        }
-        if(leaders[A[i]] >= A.length/2) {
-            leaderNum = A[i];
-        }
-    }
-    // console.log(leaders);
-    // console.log(leaderNum);
-    // console.log(leaders[leaderNum]);
+    A.forEach(e => {
+       if(!hash[e]) {
+            hash[e] = 0;        
+       }
+       hash[e]++;
+       if (hash[e] > A.length/2) {
+            leaderNum = e;
+            leaderNumTotal = hash[e];
+       }
+    });
     
-    if (leaderNum == -1) {
-        return equiLeaders;
+    if (leaderNum === undefined) {
+        return 0;   
     }
     
-    let count = 0;
-    for(i=0; i<A.length; i++) {
-        if(A[i] == leaderNum) {
-            count++;
+    
+    for (let i=0; i<A.length; i++) {
+        if (A[i] === leaderNum) {
+            leaderNumCount++;
         }
         
-        if (count > (i+1)/2 && (leaders[leaderNum] - count) > (A.length-i-1)/2) {
-            equiLeaders++;
+        let leftLeaderCount = leaderNumTotal - leaderNumCount;
+        let leftElementHaf = (A.length - i-1)/2;
+        
+        if (leaderNumCount > (i+1)/2 && leftLeaderCount > leftElementHaf)  {
+            equiLeaders++;               
         }
     }
     
